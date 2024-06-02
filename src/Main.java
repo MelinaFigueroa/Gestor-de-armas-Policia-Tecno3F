@@ -1,15 +1,61 @@
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
-    public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
+	public static void main(String[] args) {
+		// Crear instancias de Policia
+		Policia[] policias = new Policia[5];
+		policias[0] = new Policia("Juan", "Perez", 12345);
+		policias[1] = new Policia("Maria", "Gomez", 67890);
+		policias[2] = new Policia("Pedro", "Garcia", 13579);
+		policias[3] = new Policia("Luisa", "Fernandez", 24680);
+		policias[4] = new Policia("Carlos", "Lopez", 98765);
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            System.out.println("i = " + i);
-        }
-    }
+		// Crear instancias de ArmaCorta y ArmaLarga asignando un policía
+		ArmaCorta[] armasCorta = new ArmaCorta[5];
+		armasCorta[0] = new ArmaCorta(10, 15, "Glock", 15, "EN USO", true);
+		armasCorta[0].setPoliciaAsignado(policias[0]);
+		armasCorta[1] = new ArmaCorta(15, 15, "Beretta", 15, "EN USO", false);
+		armasCorta[1].setPoliciaAsignado(policias[1]);
+		armasCorta[2] = new ArmaCorta(12, 15, "Smith & Wesson", 15, "EN USO", true);
+		armasCorta[2].setPoliciaAsignado(policias[2]);
+		armasCorta[3] = new ArmaCorta(8, 15, "Colt", 15, "EN USO", false);
+		armasCorta[3].setPoliciaAsignado(policias[3]);
+		armasCorta[4] = new ArmaCorta(20, 15, "SIG Sauer", 15, "EN MANTENIMIENTO", true);
+		armasCorta[4].setPoliciaAsignado(policias[4]);
+
+		ArmaLarga[] armasLarga = new ArmaLarga[5];
+		armasLarga[0] = new ArmaLarga(20, 15.0, "Remington", 15, "EN USO", "Caza", 3, true);
+		armasLarga[0].setPoliciaAsignado(policias[0]);
+		armasLarga[1] = new ArmaLarga(25, 15.0, "Winchester", 15, "EN USO", "Patrullaje", 4, true);
+		armasLarga[1].setPoliciaAsignado(policias[1]);
+		armasLarga[2] = new ArmaLarga(30, 15.0, "Mossberg", 15, "EN MANTENIMIENTO", "Caza", 2, true);
+		armasLarga[2].setPoliciaAsignado(policias[2]);
+		armasLarga[3] = new ArmaLarga(22, 15.0, "Browning", 15, "EN USO", "Seguridad", 5, true);
+		armasLarga[3].setPoliciaAsignado(policias[3]);
+		armasLarga[4] = new ArmaLarga(18, 15.0, "Benelli", 15, "EN USO", "Patrullaje", 4, true);
+		armasLarga[4].setPoliciaAsignado(policias[4]);
+
+		// Mostrar información de los policías y las armas
+		for (int i = 0; i < policias.length; i++) {
+			mostrarInformacionPoliciaArmas(policias[i], armasCorta[i], armasLarga[i]);
+			System.out.println("¿El arma corta " + (i+1) + " está en condiciones? " + armasCorta[i].enCondicion());
+			System.out.println("¿El arma larga " + (i+1) + " está en condiciones? " + armasLarga[i].enCondicion());
+			compararArmas(armasLarga[i], armasLarga[(i+1)%5]); // Comparación circular
+			System.out.println();
+		}
+	}
+
+	public static void mostrarInformacionPoliciaArmas(Policia policia, ArmaCorta armaCorta, ArmaLarga armaLarga) {
+		System.out.println("Policía: Nombre: " + policia.getNombre() + " " + policia.getApellido() + ", Legajo: " + policia.getLegajo());
+		System.out.println("Arma Corta: Marca: " + armaCorta.getMarca() + ", Calibre: " + armaCorta.getCalibre() + ", Estado: " + armaCorta.getEstado() + ", Automática: " + armaCorta.isAutomatica());
+		System.out.println("Arma Larga: Marca: " + armaLarga.getMarca() + ", Calibre: " + armaLarga.getCalibre() + ", Estado: " + armaLarga.getEstado() + ", Justificación de uso: " + armaLarga.getJustifiUso() + ", Nivel del arma: " + armaLarga.getNivelArma() + ", Sello RENAR: " + armaLarga.isTieneSello());
+	}
+
+	public static void compararArmas(ArmaLarga arma1, ArmaLarga arma2) {
+		if (arma1.compareTo(arma2) > 0) {
+			System.out.println("El arma larga " + arma1.getMarca() + " tiene un nivel mayor que el arma larga " + arma2.getMarca() + ".");
+		} else if (arma1.compareTo(arma2) < 0) {
+			System.out.println("El arma larga " + arma1.getMarca() + " tiene un nivel menor que el arma larga " + arma2.getMarca() + ".");
+		} else {
+			System.out.println("El arma larga " + arma1.getMarca() + " tiene el mismo nivel que el arma larga " + arma2.getMarca() + ".");
+		}
+	}
 }

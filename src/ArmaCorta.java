@@ -1,19 +1,27 @@
-public class Corta extends Arma{
+// ArmaCorta.java
+public class ArmaCorta extends Arma {
 	private boolean esAutomatica;
 
-		public Corta(Policia policia, int cantidadMuniciones, int alcance, String marca, int calibre, String estado, boolean esAutomatica) {
-			super(policia, cantidadMuniciones, alcance, marca, calibre, estado);
-			this.esAutomatica = esAutomatica;
-		}
-
-		@Override
-		public boolean estaEnCondiciones() {
-			return estado.equals("EN USO") && calibre >= 9;
-		}
-
-		public boolean sePuedeDispararMasDe200m() {
-			return alcance > 200;
-		}
+	public ArmaCorta(int cantidadMuniciones, double alcance, String marca, int calibre, String estado, boolean esAutomatica) {
+		super(cantidadMuniciones, alcance, marca, calibre, estado);
+		this.esAutomatica = esAutomatica;
 	}
 
+	public boolean isAutomatica() {
+		return esAutomatica;
+	}
+
+	@Override
+	public boolean enCondicion() {
+		return getEstado().equals("EN USO") && getCalibre() >= 9;
+	}
+
+	@Override
+	public String toString() {
+		return super.toString() + ", Automática: " + esAutomatica;
+	}
+
+	public boolean efectivaMts() {
+		return getAlcance() > 200;
+	}
 }
